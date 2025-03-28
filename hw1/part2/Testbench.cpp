@@ -140,18 +140,12 @@ void Testbench::do_LoG() {
   o_rst.write(true);
   for (y = 0; y != height; ++y) {
     for (x = 0; x != width; ++x) {
-      // Process a 3x3 block
-      for (i = -1; i <= 1; ++i) {
-        for (j = -1; j <= 1; ++j) {
-          // Process each 3x3 region in the 5x5 block
-          for (v = -1; v <= 1; ++v) {
-            for (u = -1; u <= 1; ++u) {
-              int yi = y + i + v;
-              int xi = x + j + u;
-              if (((x == 0)          && (j == -1)) ||
-                  ((x == width - 1)  && (j ==  1)) ||
-                  ((y == 0)          && (i == -1)) ||
-                  ((y == height - 1) && (i ==  1))  ) {
+      if (x == 0) {
+
+      } else { // 1~255
+
+      }
+              if () {
                 INTENSITY = 0;
               } else if (xi >= 0 && xi < width && yi >= 0 && yi < height) {
                 INTENSITY = *(source_bitmap + width * yi + xi);
