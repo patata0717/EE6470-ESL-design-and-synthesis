@@ -13,3 +13,5 @@ For different input file, please modify some arguments in CMakeLists.txt (marked
 - HEIGHT
 
 Output image will be generated in hw1/part1/build directory, and compare with hw1/SW/golden/
+
+For debugging, you can modify filter_def.h.in, each filter/testbench has its argument to control verbal.
