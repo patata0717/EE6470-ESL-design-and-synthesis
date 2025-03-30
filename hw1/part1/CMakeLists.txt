@@ -13,6 +13,21 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -Wall")
 # Set clock period = 1 ns
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D CLOCK_PERIOD=1.0")
 
+# Set file name
+set(FILE_NAME "lena_color_256")	# modify here
+set(INPUT_FILE "${FILE_NAME}_gray_noise.bmp")
+set(GOLDEN_FILE "${FILE_NAME}_gray_noise_gaussian_laplacian2.bmp")
+
+# Set image size
+set(WIDTH 256)	# modify here
+set(HEIGHT 256)	# modify here
+
+# Configure filter_def.h
+configure_file(${CMAKE_SOURCE_DIR}/filter_def.h.in ${CMAKE_SOURCE_DIR}/filter_def.h @ONLY)
+
+# Include the generated file
+include_directories(${CMAKE_BINARY_DIR})
+
 # Define the executable name and its source code
 file(GLOB SRC "*.cpp")
 add_executable(LoG ${SRC})
@@ -25,7 +40,7 @@ target_link_libraries(LoG systemc)
 # Add test LoG filter command
 set(OUT_FILE "out.bmp")
 add_custom_command(OUTPUT ${OUT_FILE}
-	COMMAND ./LoG ../../SW/golden/lena_color_256_gray_noise.bmp ./${OUT_FILE}
+	COMMAND ./LoG ../../SW/golden/${INPUT_FILE} ./${OUT_FILE}
 	DEPENDS LoG
 	WORKING_DIRECTORY ${CMAKE_BINARY_DIR}	
 )
@@ -35,8 +50,7 @@ add_custom_target(run
 
 # Compare output & golden
 add_custom_target(check
-	# COMMAND diff -s ${CMAKE_BINARY_DIR}/${OUT_FILE} ../SW/golden/lena/lena_color_256_gray_noise_gaussian2.bmp
-	COMMAND diff -s ${CMAKE_BINARY_DIR}/${OUT_FILE} ../SW/golden/lena_color_256_gray_noise_gaussian_laplacian2.bmp
+	COMMAND diff -s ${CMAKE_BINARY_DIR}/${OUT_FILE} ../SW/golden/${GOLDEN_FILE}
 	DEPENDS run
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}	
 )

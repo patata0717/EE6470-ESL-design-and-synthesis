@@ -52,7 +52,7 @@ if __name__ == '__main__':
     # Input original image file
     # To use another image input file, please change the filename
     # Also the downloaded 'standard_test_images/' should be in the same folder
-    filename='lena_color_256'
+    filename='mandril_color'
     img = cv2.imread(f'./{filename}.tif')
     # Write out original image in color bmp format
     # cv2.imwrite(f'./{filename}.bmp', img)

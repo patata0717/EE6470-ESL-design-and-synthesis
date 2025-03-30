@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/u110/u110061146/ee6470/hw1/part2/build
 
 CXX_FLAGS = -D_GLIBCXX_USE_CXX11_ABI=0 -O3 -Wall -D CLOCK_PERIOD=1.0 -std=gnu++17
 

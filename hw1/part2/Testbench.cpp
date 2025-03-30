@@ -64,8 +64,6 @@ int Testbench::read_bmp(string infile_name) {
 
   // move offset to input_rgb_raw_data_offset to get RGB raw data
   fseek(fp_s, input_rgb_raw_data_offset, SEEK_SET);
-  cout << "byte: " << bytes_per_pixel << endl;
-  cout << "bits: " << bits_per_pixel << endl;
 
   source_bitmap =
       (unsigned char *)malloc((size_t)width * height * bytes_per_pixel);
@@ -132,7 +130,7 @@ int Testbench::write_bmp(string outfile_name) {
 }
 
 void Testbench::do_LoG() {
-  int i, j, x, y, v, u;        // for loop counter
+  int x, y, i, j, k, v, u;        // for loop counter
   unsigned char INTENSITY;
   double total;
 
@@ -141,41 +139,123 @@ void Testbench::do_LoG() {
   for (y = 0; y != height; ++y) {
     for (x = 0; x != width; ++x) {
       if (x == 0) {
-
-      } else { // 1~255
-
-      }
-              if () {
-                INTENSITY = 0;
-              } else if (xi >= 0 && xi < width && yi >= 0 && yi < height) {
-                INTENSITY = *(source_bitmap + width * yi + xi);
-              } else {
-                INTENSITY = 0;
-              }
-              o_intensity.write(INTENSITY);
-              if (verbal_tb) {
-                std::cout << "[T]: Writing " << "xi: " << xi
-                                             << " yi: " << yi
-                                             << " x: " << x
-                                             << " y: " << y
-                                             << " i: " << i
-                                             << " j: " << j
-                                             << " v: " << v
-                                             << " u: " << u
-                << " " << (int)INTENSITY << " at " << sc_time_stamp() << std::endl;
-              }
-              wait(1); // emulate channel delay
+        // ask 24 data
+        // first 15
+        for (u = -2; u <= 2; u++) {
+          for (v = -1; v <= 1; v++) {
+            j = u;
+            i = v;
+            INTENSITY = ((x + i > width - 1) || (x + i < 0) || (y + j > height - 1) || (y + j < 0)) ? 0 : *(source_bitmap + width * (y + j) + (x + i));
+            o_intensity.write(INTENSITY);
+            if (verbal_tb) {
+              std::cout << "[T]: Writing"
+                                           << " x: " << x
+                                           << " y: " << y
+                                           << " i: " << i
+                                           << " j: " << j
+              << " " << (int)INTENSITY << " at " << sc_time_stamp() << std::endl;
             }
+            wait(1); // emulate channel delay
           }
+        }
+        // next 9, same as x = 1 to 255
+        for (k = 0; k < 9; k++) {
+          switch(k) {
+            case 0:
+              i = 0; j = -2;
+              break;
+            case 1:
+              i = 1; j = -2;
+              break;
+            case 2:
+              i = 2; j = -2;
+              break;
+            case 3:
+              i = 2; j = -1;
+              break;
+            case 4:
+              i = 2; j = 0;
+              break;
+            case 5:
+              i = 2; j = 1;
+              break;
+            case 6:
+              i = 0; j = 2;
+              break;
+            case 7:
+              i = 1; j = 2;
+              break;
+            case 8:
+              i = 2; j = 2;
+              break;
+            default:
+              break;
+          }
+          INTENSITY = ((x + i > width - 1) || (x + i < 0) || (y + j > height - 1) || (y + j < 0)) ? 0 : *(source_bitmap + width * (y + j) + (x + i));
+          o_intensity.write(INTENSITY);
+          if (verbal_tb) {
+            std::cout << "[T]: Writing" 
+                                         << " x: " << x
+                                         << " y: " << y
+                                         << " i: " << i
+                                         << " j: " << j
+            << " " << (int)INTENSITY << " at " << sc_time_stamp() << std::endl;
+          }
+          wait(1); // emulate channel delay
+        }
+      } else { // 1~255
+        // ask 9 data
+        for (k = 0; k < 9; k++) {
+          switch(k) {
+            case 0:
+              i = 0; j = -2;
+              break;
+            case 1:
+              i = 1; j = -2;
+              break;
+            case 2:
+              i = 2; j = -2;
+              break;
+            case 3:
+              i = 2; j = -1;
+              break;
+            case 4:
+              i = 2; j = 0;
+              break;
+            case 5:
+              i = 2; j = 1;
+              break;
+            case 6:
+              i = 0; j = 2;
+              break;
+            case 7:
+              i = 1; j = 2;
+              break;
+            case 8:
+              i = 2; j = 2;
+              break;
+            default:
+              break;
+          }
+          INTENSITY = ((x + i > width - 1) || (x + i < 0) || (y + j > height - 1) || (y + j < 0)) ? 0 : *(source_bitmap + width * (y + j) + (x + i));
+          o_intensity.write(INTENSITY);
+          if (verbal_tb) {
+            std::cout << "[T]: Writing" 
+                                         << " x: " << x
+                                         << " y: " << y
+                                         << " i: " << i
+                                         << " j: " << j
+            << " " << (int)INTENSITY << " at " << sc_time_stamp() << std::endl;
+          }
+          wait(1); // emulate channel delay
         }
       }
 
-      if (verbal_tb) {std::cout << "[T]: Waiting " << (int)total << " at " << sc_time_stamp() << std::endl;}
+      if (verbal_tb) {std::cout << "[T]: Waiting " << "  at " << sc_time_stamp() << std::endl;}
       if(i_result.num_available()==0) wait(i_result.data_written_event());
       total = i_result.read();
       if (verbal_tb) {std::cout << "[T]: Reading " << (int)total << " at " << sc_time_stamp() << std::endl;}
       //cout << "Now at " << sc_time_stamp() << endl; //print current sc_time
-
 
       if (total > 255) {
         *(target_bitmap + bytes_per_pixel * (width * y + x)) = 255;

@@ -64,8 +64,6 @@ int Testbench::read_bmp(string infile_name) {
 
   // move offset to input_rgb_raw_data_offset to get RGB raw data
   fseek(fp_s, input_rgb_raw_data_offset, SEEK_SET);
-  cout << "byte: " << bytes_per_pixel << endl;
-  cout << "bits: " << bits_per_pixel << endl;
 
   source_bitmap =
       (unsigned char *)malloc((size_t)width * height * bytes_per_pixel);
