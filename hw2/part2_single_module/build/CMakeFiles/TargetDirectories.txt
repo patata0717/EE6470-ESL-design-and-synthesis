@@ -1,5 +1,0 @@
-/home/u110/u110061146/ee6470/hw2/part2_single_module/build/CMakeFiles/LoG.dir
-/home/u110/u110061146/ee6470/hw2/part2_single_module/build/CMakeFiles/run.dir
-/home/u110/u110061146/ee6470/hw2/part2_single_module/build/CMakeFiles/check.dir
-/home/u110/u110061146/ee6470/hw2/part2_single_module/build/CMakeFiles/edit_cache.dir
-/home/u110/u110061146/ee6470/hw2/part2_single_module/build/CMakeFiles/rebuild_cache.dir
