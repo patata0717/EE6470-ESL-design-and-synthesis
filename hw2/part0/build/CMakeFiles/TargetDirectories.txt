@@ -1,0 +1,5 @@
+/home/u110/u110061146/ee6470/hw2/part0/build/CMakeFiles/LoG.dir
+/home/u110/u110061146/ee6470/hw2/part0/build/CMakeFiles/run.dir
+/home/u110/u110061146/ee6470/hw2/part0/build/CMakeFiles/check.dir
+/home/u110/u110061146/ee6470/hw2/part0/build/CMakeFiles/edit_cache.dir
+/home/u110/u110061146/ee6470/hw2/part0/build/CMakeFiles/rebuild_cache.dir

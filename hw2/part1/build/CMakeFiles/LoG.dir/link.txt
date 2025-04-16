@@ -1,0 +1,1 @@
+/usr/bin/g++ -D_GLIBCXX_USE_CXX11_ABI=0 -O3 -Wall -D CLOCK_PERIOD=1.0 CMakeFiles/LoG.dir/GaussianFilter.cpp.o CMakeFiles/LoG.dir/Initiator.cpp.o CMakeFiles/LoG.dir/LaplacianFilter.cpp.o CMakeFiles/LoG.dir/LoGFilter.cpp.o CMakeFiles/LoG.dir/Testbench.cpp.o CMakeFiles/LoG.dir/main.cpp.o -o LoG  -lsystemc
