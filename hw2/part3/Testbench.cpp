@@ -80,10 +80,11 @@ int Testbench::read_bmp(string infile_name) {
     return -1;
   }
 
+  printf("Image width=%d, height=%d\n", width, height);
+
   assert(fread(source_bitmap, sizeof(unsigned char),
                (size_t)(long)width * height * bytes_per_pixel, fp_s));
-  fclose(fp_s);
-
+  
   unsigned int file_size; // file size
 
   // file size
@@ -108,6 +109,7 @@ int Testbench::read_bmp(string infile_name) {
   // bit per pixel
   header[28] = bits_per_pixel;
 
+  fclose(fp_s);
   return 0;
 }
 

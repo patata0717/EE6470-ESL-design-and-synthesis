@@ -14,13 +14,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D CLOCK_PERIOD=1.0")
 
 # Set file name
-set(FILE_NAME "lena_color_256") # modify here
+set(FILE_NAME "mandril_color") # modify here
 set(INPUT_FILE "${FILE_NAME}_gray_noise.bmp")
 set(GOLDEN_FILE "${FILE_NAME}_gray_noise_gaussian_laplacian2.bmp")
 
 # Set image size
-set(WIDTH 256) # modify here
-set(HEIGHT 256) # modify here
+set(WIDTH 512) # modify here
+set(HEIGHT 512) # modify here
 
 # Configure filter_def.h
 configure_file(${CMAKE_SOURCE_DIR}/filter_def.h.in ${CMAKE_SOURCE_DIR}/filter_def.h @ONLY)

@@ -67,7 +67,7 @@ include CMakeFiles/check.dir/compiler_depend.make
 include CMakeFiles/check.dir/progress.make
 
 CMakeFiles/check:
-	cd /home/u110/u110061146/ee6470/hw2/part0 && diff -s /home/u110/u110061146/ee6470/hw2/part0/build/out.bmp ../SW/golden/lena_color_256_gray_noise_gaussian_laplacian2.bmp
+	cd /home/u110/u110061146/ee6470/hw2/part0 && diff -s /home/u110/u110061146/ee6470/hw2/part0/build/out.bmp ../SW/golden/mandril_color_gray_noise_gaussian_laplacian2.bmp
 
 CMakeFiles/check.dir/codegen:
 .PHONY : CMakeFiles/check.dir/codegen

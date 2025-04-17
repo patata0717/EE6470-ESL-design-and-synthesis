@@ -70,7 +70,7 @@ CMakeFiles/run: out.bmp
 
 out.bmp: LoG
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/u110/u110061146/ee6470/hw2/part3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating out.bmp"
-	./LoG ../../SW/golden/lena_color_256_gray_noise.bmp ./out.bmp
+	./LoG ../../SW/golden/mandril_color_gray_noise.bmp ./out.bmp
 
 CMakeFiles/run.dir/codegen:
 .PHONY : CMakeFiles/run.dir/codegen

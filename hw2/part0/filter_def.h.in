@@ -13,6 +13,6 @@ const int MASK_Y = 3;
 // verbal
 const bool verbal_tb = 0;
 const bool verbal_gaussian = 0;
-const bool verbal_laplacian = 1;
+const bool verbal_laplacian = 0;
 
 #endif
