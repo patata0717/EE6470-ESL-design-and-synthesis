@@ -1,0 +1,19 @@
+*** Current stack trace:
+--> 0x2b2c4b11b387 gsignal              + 37       /usr/lib64/libc.so.6
+--> 0x2b2c4b11b387 gsignal              + 37       /usr/lib64/libc.so.6
+--> 0x2b2c4b11ca78 abort                + 148      /usr/lib64/libc.so.6
+--> 0x2b2c4b15df67 <don't know>         + 78f67    /usr/lib64/libc.so.6
+--> 0x2b2c4b166329 <don't know>         + 81329    /usr/lib64/libc.so.6
+--> 0x2b2c62609607 sc_core::sc_report::~sc_report() + 57       /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/systemc/2.3.3/lib-linux64/libsystemc-2.3.3.so
+--> 0x2b2c6252d6a2 <don't know>         + 9e6a2    /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/systemc/2.3.3/lib-linux64/libsystemc-2.3.3.so
+--> 0x2b2c62548e1c sc_core::sc_start(sc_core::sc_time const&, sc_core::sc_starvation_policy) + 22c      /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/systemc/2.3.3/lib-linux64/libsystemc-2.3.3.so
+--> 0x2b2c621a42a8 esc_hub::exec_sc_now() + 3e       ./bdw_work/sims/V_GF_BASIC/sim_V_GF_BASIC.so
+--> 0x2b2c621a43eb esc_hub::domain_exec_cb(unsigned long, qbhDomainExecActivity, double, double*) + 103      ./bdw_work/sims/V_GF_BASIC/sim_V_GF_BASIC.so
+--> 0x2b2c621a354e esc_hub::static_domain_exec_cb(unsigned long, void*, qbhDomainExecActivity, double, double*) + 44       ./bdw_work/sims/V_GF_BASIC/sim_V_GF_BASIC.so
+--> 0x2b2c542f5fdd CHubExecDomain::execNow(double) + 3d       /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib/64bit/libhub.so
+--> 0x2b2c542f696f CHub::execAllNow(double) + 4f       /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib/64bit/libhub.so
+--> 0x2b2c542f6bd9 CHub::execute()   + 49       /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib/64bit/libhub.so
+--> 0x2b2c542f6c75 CHub::leaving(bool)   + 45       /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib/64bit/libhub.so
+--> 0x803098  <don't know>         + 403098  
+--> 0xcc67b5  <don't know>         + 8c67b5  
+--> 0x488954a <don't know>         + 448954a 

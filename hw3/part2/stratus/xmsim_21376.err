@@ -1,0 +1,101 @@
+csi-xmsim - CSI: Command line:
+xmsim
+    -f /home/u110/u110061146/ee6470/hw3/part2/stratus/bdw_work/sims/V_BASIC/run.lnx8664.22.03.d/ws26_21376/xmsim.args
+        +BDW_VLOG_DUMPFILE+
+        +hubSetOption+libdef=bdw_work/sims/V_BASIC/sim_V_BASIC.so,argv=../../SW/golden/lena_color_256_gray_noise.bmp%out.bmp
+        +hubSetOption+bdr=bdw_work/sims/V_BASIC/sim.bdr
+        +xm64bit
+        +incdir+/usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib
+        +incdir+bdw_work/wrappers
+        +access+rw
+        +loadpli1=/usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib/64bit/ncvlog_ssl:ssl_bootstrap
+        +xminput+bdw_work/sims/V_BASIC/ncverilog.do
+        +xmlibdirname+bdw_work/sims/V_BASIC
+        +libext+.v
+        +define+ioConfig
+        +define+BDW_RTL_GaussianFilter_BASIC
+        +define+ioConfig
+        +define+BDW_RTL_LaplacianFilter_BASIC
+        +nowarn+LIBNOU
+        -amsdlibdir bdw_work/sims/V_BASIC/AMSD
+        -INPUT bdw_work/sims/V_BASIC/ncverilog.do
+        -NOWARN LIBNOU
+        -MESSAGES
+        +EMGRLOG bdw_work/sims/V_BASIC/bdw_sim_verilog.log
+        -XLSTIME 1747191427
+        -XLKEEP
+        -XLMODE bdw_work/sims/V_BASIC/run.lnx8664.22.03.d
+        -RUNMODE
+        -CDSLIB bdw_work/sims/V_BASIC/run.lnx8664.22.03.d/cds.lib
+        -HDLVAR bdw_work/sims/V_BASIC/run.lnx8664.22.03.d/hdl.var
+        -XLNAME xrun
+        -XLVERSION TOOL:	xrun(64)	22.03-s003
+        -XLNAME ./bdw_work/sims/V_BASIC/run.lnx8664.22.03.d/ws26_21376
+    -CHECK_VERSION TOOL:	xrun(64)	22.03-s003
+    -LOG_FD 4
+    -LOG_FD_NAME bdw_work/sims/V_BASIC/bdw_sim_verilog.log
+    -cmdnopsim
+    -runlock /home/u110/u110061146/ee6470/hw3/part2/stratus/bdw_work/sims/V_BASIC/run.lnx8664.22.03.d/.xmlib.lock
+    -runscratch /home/u110/u110061146/ee6470/hw3/part2/stratus/bdw_work/sims/V_BASIC/run.lnx8664.22.03.d/ws26_21376
+
+csi-xmsim - CSI: *F,INTERR: INTERNAL EXCEPTION
+Observed simulation time : 12602790 NS + 0
+-----------------------------------------------------------------
+The tool has encountered an unexpected condition and must exit.
+Contact Cadence Design Systems customer support about this
+problem and provide enough information to help us reproduce it,
+including the logfile that contains this error message.
+  TOOL:	xmsim(64)	22.03-s003
+  HOSTNAME: ws26
+  OPERATING SYSTEM: Linux 3.10.0-1160.95.1.el7.x86_64 #1 SMP Mon Jul 24 13:59:37 UTC 2023 x86_64
+  MESSAGE: rts_abrthandler - SIGABRT unexpected violation pc=0x2b3ceb61c387 addr=0x5a2600005380
+-----------------------------------------------------------------
+
+csi-xmsim - CSI: Cadence Support Investigation, recording details
+External Code in function: <unavailable> offset -65498
+External Code in function: <unavailable> offset -65513
+External Code in function: <unavailable> offset -65536
+Simulator Snap Shot: gd (SSS_GD) in snapshot worklib.top:v (SSS)
+External Code in function: <unavailable> offset -65535
+External Code in function: <unavailable> offset -65533
+Verilog Syntax Tree: system task enable statement (VST_S_SYSTEM_TASK_ENABLE) in module worklib.top:v (VST)
+	File: /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib/hub.v, line 476, position 32
+	Scope: top.hubScheduleDelayedAssignments
+	Decompile: $sslScheduleDelayedAssignments
+	Source  : 			$sslScheduleDelayedAssignments;
+	Position: 			                             ^
+Verilog Syntax Tree: system task enable statement (VST_S_SYSTEM_TASK_ENABLE) in module worklib.top:v (VST)
+	File: /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib/hub.v, line 470, position 20
+	Scope: top.hubInitQuickDrive
+	Decompile: $sslInitQuickDrive
+	Source  : 			$sslInitQuickDrive;
+	Position: 			                 ^
+Verilog Syntax Tree: system task enable statement (VST_S_SYSTEM_TASK_ENABLE) in module worklib.top:v (VST)
+	File: /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib/hub.v, line 464, position 20
+	Scope: top.qbInitQuickDrive
+	Decompile: $sslInitQuickDrive
+	Source  : 			$sslInitQuickDrive;
+	Position: 			                 ^
+Code Item: ascii cb (COD_CB_ASCII)
+External Code in function: <unavailable> offset -65420
+Verilog Syntax Tree: identifier expression (VST_E_IDENTIFIER) in module worklib.LaplacianFilter:v (VST)
+	File: /home/u110/u110061146/ee6470/hw3/part2/stratus/bdw_work/modules/LaplacianFilter/BASIC/LaplacianFilter_rtl.v, line 1949, position 48
+	Scope: LaplacianFilter
+	Decompile: LaplacianFilter_N_Muxb_1_2_4_4_4_out1
+	Source  :             LaplacianFilter_N_Muxb_1_2_4_4_4_out1 = i_gaussian_result_m_unvalidated_req;
+	Position:                                                 ^
+Verilog Syntax Tree: sequential block statement (VST_S_SEQ_BLOCK) in module worklib.LaplacianFilter:v (VST)
+	File: /home/u110/u110061146/ee6470/hw3/part2/stratus/bdw_work/modules/LaplacianFilter/BASIC/LaplacianFilter_rtl.v, line 1825, position 26
+	Scope: LaplacianFilter.drive_gs_ctrl_do_filter_h28
+	Source  :                       begin
+	Position:                           ^
+Verilog Syntax Tree: sequential block statement (VST_S_SEQ_BLOCK) in module worklib.LaplacianFilter_cosim:v (VST)
+	File: /usr/cadtool/cadence/STRATUS/STRATUS_23.02.004/tools.lnx86/stratus/lib/hub.v, line 78, position 6
+	Scope: LaplacianFilter_cosim.hubSetOption
+	Source  : 		begin
+	Position: 		    ^
+Intermediate File: string (IF_STRING) in module worklib.LaplacianFilter_cosim:v (VST)
+	Decompile: qb_tdb_fb_start
+External Code in function: <unavailable> offset -61440
+External Code in function: <unavailable> offset -54536
+csi-xmsim - CSI: investigation complete took 0.012 secs, send this file to Cadence Support
