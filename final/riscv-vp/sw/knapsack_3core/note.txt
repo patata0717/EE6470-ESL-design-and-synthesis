@@ -1,0 +1,121 @@
+/* ================================================================
+ * tiny32-mc-final  –  4-core bootstrap  (stacks + PLIC + traps)
+ *    **Option B: real external IRQ handshake with PLIC claim/complete**
+ * ================================================================ */
+
+        .section .text
+        .globl  _start, main, init
+
+/* ---------- constants ------------------------------------------ */
+        .equ  RAM_TOP,        0x02000000          /* 32 MiB DRAM top     */
+        .equ  STACK_SIZE,     0x00004000          /* 16 KiB per hart     */
+
+        .equ  PLIC_BASE,      0x40000000
+        .equ  PLIC_PRIORITY,  (PLIC_BASE + 0x0000)
+        .equ  PLIC_ENABLE,    (PLIC_BASE + 0x2000)
+        .equ  PLIC_CLAIM,     (PLIC_BASE + 0x200004)   /* hart-0 M-mode     */
+
+        .equ  SYSCALL_ADDR,   0x02010000          /* mi/me “syscall”    */
+
+/* ---------- helper to terminate the VP ------------------------- */
+        .macro SYS_EXIT exit_code
+            li   a7, 93
+            li   a0, \exit_code
+            li   t0, SYSCALL_ADDR
+            csrr a6, mhartid
+            sw   a6, 0(t0)                       /* write ⇒ VP stops   */
+        .endm
+
+/* ================================================================
+ * Reset entry – all harts arrive here
+ * ================================================================ */
+_start:
+        /* --- set up global pointer ----------------------------- */
+        .option push
+        .option norelax
+1:      auipc gp, %pcrel_hi(__global_pointer$)
+        addi  gp, gp, %pcrel_lo(1b)
+        .option pop
+
+        /* --- per-hart stack (16 KiB each) ----------------------- */
+        csrr  a0, mhartid
+        li    t0, STACK_SIZE
+        mul   t1, a0, t0
+        li    t2, RAM_TOP
+        addi  t2, t2, -4                       /* top-4 for alignment */
+        sub   sp, t2, t1
+
+        /* --- install level-0 trap vector ----------------------- */
+        la    t0, _level0_trap
+        csrw  mtvec, t0
+
+        /* --- PLIC set-up (DMA=IRQ0, 4×PE = IRQ4-7) ------------- */
+        li    t3, 1
+        li    t4, PLIC_PRIORITY
+        /* priorities                                              */
+        sw    t3,   0(t4)       /* IRQ0  (DMA)  */
+        sw    t3,  16(t4)       /* IRQ4  (PE0)  */
+        sw    t3,  20(t4)       /* IRQ5  (PE1)  */
+        sw    t3,  24(t4)       /* IRQ6  (PE2)  */
+        sw    t3,  28(t4)       /* IRQ7  (PE3)  */
+        /* enable bits for hart-0                                  */
+        li    t3, (1<<0)|(1<<4)|(1<<5)|(1<<6)|(1<<7)
+        li    t4, PLIC_ENABLE
+        sw    t3, 0(t4)
+
+        /* --- global interrupt mask ----------------------------- */
+        li    t3, 0x888          /* MEIE|MTIE|MSIE */
+        csrw  mie, t3
+        csrsi mstatus, 8         /* set MIE bit    */
+
+        /* --- optional board init & main ------------------------ */
+        mv    s0, a0             /* keep hart-id   */
+        jal   init
+        mv    a0, s0
+        jal   main               /* should not return */
+
+        /* --- barrier & exit ------------------------------------ */
+        la    t4, exit_counter
+        li    t3, 1
+        amoadd.w t5, t3, (t4)    /* ++counter      */
+        addi  t5, t5, 1
+        li    t6, 4
+1:      blt   t5, t6, 1b         /* wait for all   */
+        SYS_EXIT 0
+2:      j     2b                 /* never reached  */
+
+/* ================================================================
+ * Shared exit counter (sbss)
+ * ================================================================ */
+        .section .sbss
+        .align 4
+exit_counter:   .word 0
+
+/* ================================================================
+ * level-0 trap:  handle
+ *   • external IRQs (PLIC claim/complete)   ▲
+ *   • ecall from user mode  (pass to VP)    ▲
+ * ================================================================ */
+        .section .text
+        .align 4
+_level0_trap:
+        csrr   t1, mcause
+        bltz   t1, 1f                 /* < 0 → external interrupt?  */
+        /* ---------- synchronous trap or ecall ------------------ */
+        li     t0, SYSCALL_ADDR       /* tell the VP what happened  */
+        sw     t1, 0(t0)              /* (this is optional)         */
+        j      2f
+
+/* ---------- external interrupt via PLIC ------------------------ */
+1:      li     t0, PLIC_CLAIM         /* claim/complete register    */
+        lw     t2, 0(t0)              /* read claim  → IRQ id       */
+        sw     t2, 0(t0)              /* write back to complete     */
+        /* optional: store IRQ id for the VP                       */
+        li     t3, SYSCALL_ADDR
+        sw     t2, 0(t3)
+
+2:      /* advance past faulting insn (for ecall)                  */
+        csrr   t4, mepc
+        addi   t4, t4, 4
+        csrw   mepc, t4
+        mret
